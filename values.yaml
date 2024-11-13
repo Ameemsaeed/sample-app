@@ -1,0 +1,22 @@
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+  hello:
+    repository: ameem/hello-world-app
+    tag: "latest"
+
+deployment:
+  name: hello-world
+  namespace: sample-app
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  className: nginx
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+  host: 'hello-world.local'

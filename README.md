@@ -1,1 +1,1 @@
-# sample-app
+# sample hello world app
