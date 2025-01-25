@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-name-app-deployment
+  labels:
+    app: hello-name-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: hello-name-app
+  template:
+    metadata:
+      labels:
+        app: hello-name-app
+    spec:
+      containers:
+        - name: "hello-name-app"
+          image: "{{ .Values.image.name.repository }}:{{ .Values.image.name.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          resources:                             # resources: Define resource requests and limits
+            requests:
+              memory: "64Mi"
+              cpu: "250m"
+            limits:
+              memory: "128Mi"
+              cpu: "500m"

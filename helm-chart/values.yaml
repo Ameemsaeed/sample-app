@@ -1,0 +1,22 @@
+replicaCount: 1
+
+service:
+  type: ClusterIP
+
+image:
+  pullPolicy: IfNotPresent
+  hello:
+    repository: hello-world-app
+    tag: "latest"
+
+  name:
+    repository: hello-name-app
+    tag: "latest"
+
+  nameIp:
+    repository: hello-name-ip-app
+    tag: "latest"
+
+  reload:
+    repository: hello-reload-app
+    tag: "latest"

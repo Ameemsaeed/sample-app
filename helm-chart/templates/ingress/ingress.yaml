@@ -1,0 +1,48 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "{{ include "local-app.fullname" . }}-ingress"
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  labels:
+    {{- include "local-app.labels" . | nindent 4 }}
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: hello-world-app-service
+      port:
+        number: 8083
+  rules:
+    - host: hello-world.local
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: hello-world-app-service
+                port:
+                  number: 8083
+          - path: /name/(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: hello-name-app-service
+                port:
+                  number: 8080
+          - path: /name-ip/(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: hello-name-ip-app-service
+                port:
+                  number: 8081
+          - path: /reload/(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: hello-reload-app-service
+                port:
+                  number: 8082
