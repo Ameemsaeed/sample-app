@@ -1,4 +1,4 @@
-FROM node:4.2
+FROM node:lts-alpine3.23
 COPY . /src
 RUN cd /src && npm install
 EXPOSE 4000
